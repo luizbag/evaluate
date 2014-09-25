@@ -14,6 +14,7 @@ double InformationTheory::entropy(Partition &objPartition) {
 
 	for(Partition::itClustersOfPartition it1 = objPartition.begin(); it1 != objPartition.end(); it1++){
 		dStore = (*it1).getNumberOfObjects()	/ static_cast<double> (objPartition.getNumObjects());
+		//printf("dStore=%lf\n",dStore);
 		if (dStore != 0) dStore *= log10(dStore); // assumindo log0 = 0
 		dSummation += dStore;
 	}

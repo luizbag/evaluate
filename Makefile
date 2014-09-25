@@ -8,7 +8,7 @@ PROGRAM_NAME=evaluate
 CC=g++
 CFLAGS=
 #INCLUDE=-I /home/lasid/programs/auxiliares/boost_1_55_0
-LIBS := -lboost_system -lboost_filesystem
+LIBS := -lboost_system -lboost_filesystem -lpthread
 #LIBS2 = -L /home/lasid/programs/auxiliares/boost_1_55_0/stage/lib/
 
 # Add inputs and outputs from these tool invocations to the build variables 

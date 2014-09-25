@@ -1,27 +1,27 @@
 Id	Partition Name	# Clusters	NMI/E (irisReal.txt)	VI/E (irisReal.txt)	Count	Repeated Partitions
-1	iris-CeL-E-k2.clu	2	1.31377	-0.200687	11	, iris-SNN-E-NN45-t0.8-n0-m0.6.clu, iris-SNN-E-NN60-t0.8-n0-m0.6.clu, iris-SNN-E-NN45-t0.5-n0-m0.8.clu, iris-SNN-E-NN60-t0.8-n0-m0.8.clu, iris-SNN-E-NN30-t0.8-n0-m0.8.clu, iris-SNN-E-NN45-t0.8-n0-m0.8.clu, iris-SNN-E-NN60-t0.5-n0-m0.8.clu, iris-SNN-E-NN45-t0.5-n0-m0.6.clu, iris-SL-E-k2.clu, iris-AL-E-k2.clu
-2	iris-SNN-E-NN60-t0.8-n0-m0.4.clu	3	1.27685	-0.184473	2	, iris-SNN-E-NN60-t0.5-n0-m0.6.clu
-3	iris-KM-E-k2-Run2.clu	2	1.30058	-0.195053	1	
-4	iris-AL-E-k5.clu	5	0.928069	0.0768252	1	
-5	iris-KM-E-k5-Run1.clu	5	0.852874	0.178812	1	
-6	iris-CeL-E-k4.clu	4	0.968236	0.0318186	1	
-7	iris-CeL-E-k6.clu	6	0.899665	0.112356	1	
-8	iris-CoL-E-k3.clu	3	1.03186	-0.0290091	1	
-9	iris-SL-E-k5.clu	5	1.13674	-0.107881	1	
-10	iris-KM-E-k3-Run6.clu	3	1.00894	-0.00842041	1	
-11	iris-KM-E-k4-Run22.clu	4	0.898264	0.114196	1	
-12	iris-SL-E-k4.clu	4	1.21921	-0.156146	1	
-13	iris-SNN-E-NN45-t0.8-n0-m0.4.clu	6	0.888254	0.127599	1	
-14	iris-AL-E-k6.clu	6	0.842413	0.195202	1	
-15	iris-CoL-E-k6.clu	6	0.795121	0.277558	1	
-16	iris-KM-E-k6-Run22.clu	6	0.794525	0.278691	1	
-17	iris-CeL-E-k3.clu	3	1.01228	-0.0115027	1	
-18	iris-SL-E-k6.clu	6	1.11288	-0.0918785	1	
-19	iris-SNN-E-NN30-t0.8-n0-m0.6.clu	4	1.24295	-0.168288	1	
-20	iris-AL-E-k3.clu	3	1.11661	-0.094451	1	
-21	iris-SL-E-k3.clu	3	1.2511	-0.172301	1	
-22	iris-CoL-E-k2.clu	2	1.25968	-0.176439	1	
-23	iris-CeL-E-k5.clu	5	0.955011	0.0460113	1	
-24	iris-CoL-E-k5.clu	5	0.863075	0.163398	1	
-25	iris-CoL-E-k4.clu	4	0.93821	0.0649155	1	
-26	iris-AL-E-k4.clu	4	0.940192	0.0626326	1	
+1	iris-CeL-E-k2.clu	2	1.31377	0	11	, iris-SNN-E-NN45-t0.8-n0-m0.6.clu, iris-SNN-E-NN60-t0.8-n0-m0.6.clu, iris-SNN-E-NN45-t0.5-n0-m0.8.clu, iris-SNN-E-NN60-t0.8-n0-m0.8.clu, iris-SNN-E-NN30-t0.8-n0-m0.8.clu, iris-SNN-E-NN45-t0.8-n0-m0.8.clu, iris-SNN-E-NN60-t0.5-n0-m0.8.clu, iris-SNN-E-NN45-t0.5-n0-m0.6.clu, iris-SL-E-k2.clu, iris-AL-E-k2.clu
+2	iris-SNN-E-NN60-t0.8-n0-m0.4.clu	3	1.27685	0	2	, iris-SNN-E-NN60-t0.5-n0-m0.6.clu
+3	iris-KM-E-k2-Run2.clu	2	1.30058	0	1	
+4	iris-AL-E-k5.clu	5	0.928069	0	1	
+5	iris-KM-E-k5-Run1.clu	5	0.852874	0	1	
+6	iris-CeL-E-k4.clu	4	0.968236	0	1	
+7	iris-CeL-E-k6.clu	6	0.899665	0	1	
+8	iris-CoL-E-k3.clu	3	1.03186	0	1	
+9	iris-SL-E-k5.clu	5	1.13674	0	1	
+10	iris-KM-E-k3-Run6.clu	3	1.00894	0	1	
+11	iris-KM-E-k4-Run22.clu	4	0.898264	0	1	
+12	iris-SL-E-k4.clu	4	1.21921	0	1	
+13	iris-SNN-E-NN45-t0.8-n0-m0.4.clu	6	0.888254	0	1	
+14	iris-AL-E-k6.clu	6	0.842413	0	1	
+15	iris-CoL-E-k6.clu	6	0.795121	0	1	
+16	iris-KM-E-k6-Run22.clu	6	0.794525	0	1	
+17	iris-CeL-E-k3.clu	3	1.01228	0	1	
+18	iris-SL-E-k6.clu	6	1.11288	0	1	
+19	iris-SNN-E-NN30-t0.8-n0-m0.6.clu	4	1.24295	0	1	
+20	iris-AL-E-k3.clu	3	1.11661	0	1	
+21	iris-SL-E-k3.clu	3	1.2511	0	1	
+22	iris-CoL-E-k2.clu	2	1.25968	0	1	
+23	iris-CeL-E-k5.clu	5	0.955011	0	1	
+24	iris-CoL-E-k5.clu	5	0.863075	0	1	
+25	iris-CoL-E-k4.clu	4	0.93821	0	1	
+26	iris-AL-E-k4.clu	4	0.940192	0	1	
