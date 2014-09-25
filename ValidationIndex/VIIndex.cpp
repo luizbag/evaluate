@@ -65,6 +65,7 @@ double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     double *e1, *e2, *mut;
     double en1, en2, muts;
     double start, finish;
+    double serial, paralel;
     Partition partition[2] = {objAPartition1, objAPartition2};
     pthread_t* entropies = (pthread_t*)malloc(2*sizeof(pthread_t));
     pthread_t* mutual = (pthread_t*)malloc(sizeof(pthread_t));
@@ -72,31 +73,22 @@ double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     GET_TIME(start);
     pthread_create(&entropies[0], NULL, entropy_thread, (void*)&objAPartition1);
     pthread_create(&entropies[1], NULL, entropy_thread, (void*)&objAPartition2);
+    pthread_create(mutual, NULL, mutual_thread, (void*)&partition);
+    pthread_join(*mutual, (void**)&mut);
     pthread_join(entropies[0], (void**)&e1);
     pthread_join(entropies[1], (void**)&e2);
     GET_TIME(finish);
-    printf("Elapsed thread: %lf\n",finish-start);
+    paralel = finish-start;
     //printf("Thread foi\n");
     GET_TIME(start);
     en1 = entropy(objAPartition1);
     //printf("entropy 1 já foi também\n");
     en2 = entropy(objAPartition2);
-    GET_TIME(finish);
-    printf("Elapsed serial: %lf\n",finish-start);
-    //printf("essa foi a 2\n");
-    printf("%f\t%f\n",*e1, en1);
-    //printf("------fim-----\n");
-    printf("%f\t%f\n",*e2, en2);
-    GET_TIME(start);
-    pthread_create(mutual, NULL, mutual_thread, (void*)&partition);
-    pthread_join(*mutual, (void**)&mut);
-    GET_TIME(finish);
-    printf("Mutual thread time: %lf\n", finish-start);
-    GET_TIME(start);
     muts = mutualInformation(objAPartition1, objAPartition2);
     GET_TIME(finish);
-    printf("Mutual serial time: %lf\n", finish-start);
-    printf("%f\t%f\n",*mut, muts);
+    serial = finish-start;
+    printf("Elapsed serial: %lf\nElapsed thread: %lf\n",serial, paralel);
+    printf("----------------------\n");
 	return 0;//en1 + en2 - 2*mutualInformation(objAPartition1, objAPartition2);
 
 }
