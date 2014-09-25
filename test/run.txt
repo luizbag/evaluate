@@ -1,0 +1,1 @@
+./evaluationIndices test/iris/dataset/iris.txt test/iris/results 15 test/iris/partitions/ test/iris/TP/
