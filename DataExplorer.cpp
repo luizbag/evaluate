@@ -4,6 +4,8 @@
  */
 
 #include "DataExplorer.h"
+#include "time.h"
+#include <stdio.h>
 
 DataExplorer::DataExplorer(int iANumNn, DataSet *pADataSet, vector<Similarity *> vectorASimilarities, vector< ValidationIndex* > vectorAValidationIndexes) {
 
@@ -94,6 +96,7 @@ void DataExplorer::assignPartition() {
 
 void DataExplorer::evaluatePartition() {
 	vectorObjectivesValues.clear();
+	double start, finish;
 
 #ifdef GDID
 	map<string, double> mapGDidValues;
@@ -114,7 +117,7 @@ void DataExplorer::evaluatePartition() {
 	}
 
 	in.close();
-
+	GET_TIME(start);
 	for (itPartitionsOfPartitionsK2 it = vectorPartitionsK2.begin(); it != vectorPartitionsK2.end(); it++) {
 		for (unsigned int j = 0; j < vectorValidationIndexes.size(); j++) {
 			for (vector<RelationSDN *>::iterator itRelationSDN = vectorRelationSDN.begin(); itRelationSDN != vectorRelationSDN.end(); itRelationSDN++) {
@@ -132,8 +135,10 @@ void DataExplorer::evaluatePartition() {
 		it->first.second = vectorObjectivesValues; //stores the indices values in the vectorPartitionK2 structure
 		vectorObjectivesValues.clear();
 	}
-
+	GET_TIME(finish);
+	printf("elapsed: %lf\n",finish-start);
 #else
+	GET_TIME(start);
 	for (itPartitionsOfPartitionsK2 it = vectorPartitionsK2.begin(); it != vectorPartitionsK2.end(); it++) {
 		for (unsigned int j = 0; j < vectorValidationIndexes.size(); j++) {
 			for (vector<RelationSDN *>::iterator itRelationSDN = vectorRelationSDN.begin(); itRelationSDN != vectorRelationSDN.end(); itRelationSDN++) {
@@ -152,6 +157,8 @@ void DataExplorer::evaluatePartition() {
 		it->first.second = vectorObjectivesValues; //stores the indices values in the vectorPartitionK2 structure
 		vectorObjectivesValues.clear();
 	}
+	GET_TIME(finish);
+	printf("elapsed: %lf\n",finish-start);
 #endif
 
 }
