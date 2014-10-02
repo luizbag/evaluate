@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 3
+#define qtdThreads 2
 double resposta[qtdThreads];
 Partition* partitions;
 double mutual_summation=0;
@@ -44,16 +44,16 @@ void* partition_calculate(void* rank) {
     long i=0;
     Partition objPartition1 = *partitions;
     Partition objPartition2 = *(partitions+1);
+    printf("numClusters: %d\n",objPartition1.getNumClusters());
     long n = objPartition1.getNumClusters()/qtdThreads;
+    printf("n: %ld\n",n);
     long first = n*id;
     long last = first+n;
     double dSummation = 0;
     double dStore = 0, dProbabilityPartition1 = 0, dProbabilityPartition2 = 0;
     Partition::itClustersOfPartition it1;
 
-
-    for(i=0, it1 = objPartition1.begin(); i<first && it1 != objPartition1.end(); it1++, i++) {
-    }
+    for(i=0, it1 = objPartition1.begin(); i<first && it1 != objPartition1.end(); it1++, i++);
 
     for(i=first; i<last && it1 != objPartition1.end(); i++, it1++) {
         for(Partition::itClustersOfPartition it2 = objPartition1.begin(); it2 != objPartition1.end(); it2++){
@@ -87,6 +87,7 @@ void* mutual_thread(void* attr) {
         pthread_join(threads[i], NULL);
         mutual_summation += resposta[i];
     }
+    free(threads);
 
 
 
@@ -119,8 +120,6 @@ double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     Partition partition[2] = {objAPartition1, objAPartition2};
     pthread_t* entropies = (pthread_t*)malloc(2*sizeof(pthread_t));
     pthread_t* mutual = (pthread_t*)malloc(sizeof(pthread_t));
-    //printf("-------começo-----\n");
-    GET_TIME(start);
     //Entropia
     pthread_create(&entropies[0], NULL, entropy_thread, (void*)&objAPartition1);
     pthread_create(&entropies[1], NULL, entropy_thread, (void*)&objAPartition2);
@@ -129,19 +128,8 @@ double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     //Mutual
     pthread_create(mutual, NULL, mutual_thread, (void*)&partition);
     pthread_join(*mutual, NULL);
-    GET_TIME(finish);
-    paralel = finish-start;
-    //printf("Thread foi\n");
-    GET_TIME(start);
-    en1 = entropy(objAPartition1);
-    //printf("entropy 1 já foi também\n");
-    en2 = entropy(objAPartition2);
-    muts = mutualInformation(objAPartition1, objAPartition2);
-    GET_TIME(finish);
-    serial = finish-start;
-    //printf("Valor Serial: %lf\nValor Paralelo: %lf\n", muts, mutual_summation);
-    printf("Elapsed serial: %lf\nElapsed thread: %lf\n",serial, paralel);
-    printf("----------------------\n");
+    free(entropies);
+    free(mutual);
 	return en1 + en2 - 2*mutualInformation(objAPartition1, objAPartition2);
     //return *e1 + *e2 - 2*mutual_summation;
 
