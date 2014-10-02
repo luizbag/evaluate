@@ -6,13 +6,15 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 2
+#define qtdThreads 8
 double resposta[qtdThreads];
 Partition* partitions;
 double mutual_summation=0;
+double en[2];
 
 void* entropy_thread(void* attr) {
-    Partition* objPartition = (Partition*)attr;
+    long id = (long)attr;
+    Partition* objPartition = partitions+id;
     double dSummation = 0;
     double dStore;
 
@@ -24,7 +26,7 @@ void* entropy_thread(void* attr) {
     }
     dSummation = dSummation * -1;
     //printf("dSummationt=%lf\n",dSummation);
-    pthread_exit((void*)&dSummation);
+    en[id] = dSummation;
     //return -dSummation;
 }
 
@@ -44,9 +46,7 @@ void* partition_calculate(void* rank) {
     long i=0;
     Partition objPartition1 = *partitions;
     Partition objPartition2 = *(partitions+1);
-    printf("numClusters: %d\n",objPartition1.getNumClusters());
     long n = objPartition1.getNumClusters()/qtdThreads;
-    printf("n: %ld\n",n);
     long first = n*id;
     long last = first+n;
     double dSummation = 0;
@@ -54,7 +54,6 @@ void* partition_calculate(void* rank) {
     Partition::itClustersOfPartition it1;
 
     for(i=0, it1 = objPartition1.begin(); i<first && it1 != objPartition1.end(); it1++, i++);
-
     for(i=first; i<last && it1 != objPartition1.end(); i++, it1++) {
         for(Partition::itClustersOfPartition it2 = objPartition1.begin(); it2 != objPartition1.end(); it2++){
             dStore = intersection(objPartition1, objPartition2, it1, it2);
@@ -73,7 +72,6 @@ void* partition_calculate(void* rank) {
 
 void* mutual_thread(void* attr) {
     mutual_summation = 0;
-    partitions = (Partition*)attr;
     int i=0;
 
     pthread_t* threads = (pthread_t*)malloc(qtdThreads*sizeof(pthread_t));
@@ -113,25 +111,25 @@ void* mutual_thread(void* attr) {
 
 double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
 {
-    double *e1, *e2, *mut;
-    double en1, en2, muts;
-    double start, finish;
-    double serial, paralel;
+    int i;
     Partition partition[2] = {objAPartition1, objAPartition2};
+    partitions = partition;
     pthread_t* entropies = (pthread_t*)malloc(2*sizeof(pthread_t));
     pthread_t* mutual = (pthread_t*)malloc(sizeof(pthread_t));
     //Entropia
-    pthread_create(&entropies[0], NULL, entropy_thread, (void*)&objAPartition1);
-    pthread_create(&entropies[1], NULL, entropy_thread, (void*)&objAPartition2);
-    pthread_join(entropies[0], (void**)&e1);
-    pthread_join(entropies[1], (void**)&e2);
+    for(i=0;i<2;i++) {
+       pthread_create(&entropies[i], NULL, entropy_thread, (void*)i);
+    }
+    for(i=0;i<2;i++) {
+        pthread_join(entropies[i], NULL);
+    }
     //Mutual
     pthread_create(mutual, NULL, mutual_thread, (void*)&partition);
     pthread_join(*mutual, NULL);
     free(entropies);
     free(mutual);
-	return en1 + en2 - 2*mutualInformation(objAPartition1, objAPartition2);
-    //return *e1 + *e2 - 2*mutual_summation;
+	//return en1 + en2 - 2*mutualInformation(objAPartition1, objAPartition2);
+    return en[0]+en[1]-2*mutual_summation;//*e1 + *e2 - 2*mutual_summation;
 
 }
 

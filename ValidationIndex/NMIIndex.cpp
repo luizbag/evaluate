@@ -10,13 +10,15 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 2
+#define qtdThreads 8
 double resposta_nmi[qtdThreads];
 Partition* partitions_nmi;
 double mutual_summation_nmi=0;
+double en_nmi[2];
 
 void* entropy_thread_nmi(void* attr) {
-    Partition* objPartition = (Partition*)attr;
+    long id = (long)attr;
+    Partition* objPartition = partitions_nmi+id;
     double dSummation = 0;
     double dStore;
 
@@ -28,7 +30,7 @@ void* entropy_thread_nmi(void* attr) {
     }
     dSummation = dSummation * -1;
     //printf("dSummationt=%lf\n",dSummation);
-    pthread_exit((void*)&dSummation);
+    en_nmi[id] = dSummation;
     //return -dSummation;
 }
 
@@ -76,7 +78,7 @@ void* partition_calculate_nmi(void* rank) {
 
 void* mutual_thread_nmi(void* attr) {
     mutual_summation_nmi = 0;
-    partitions_nmi = (Partition*)attr;
+    //partitions_nmi = (Partition*)attr;
     int i=0;
 
     pthread_t* threads = (pthread_t*)malloc(qtdThreads*sizeof(pthread_t));
@@ -90,6 +92,7 @@ void* mutual_thread_nmi(void* attr) {
         pthread_join(threads[i], NULL);
         mutual_summation_nmi += resposta_nmi[i];
     }
+    free(threads);
 }
 
 /* Implementation of both inherited methods */
@@ -101,19 +104,25 @@ double NMIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     double en1, en2, muts;
     double start, finish;
     double serial, paralel;
+    int i;
     Partition partition[2] = {objAPartition1, objAPartition2};
+    partitions_nmi = partition;
     pthread_t* entropies = (pthread_t*)malloc(2*sizeof(pthread_t));
     pthread_t* mutual = (pthread_t*)malloc(sizeof(pthread_t));
     //printf("-------começo-----\n");
     //Entropia
-    pthread_create(&entropies[0], NULL, entropy_thread_nmi, (void*)&objAPartition1);
-    pthread_create(&entropies[1], NULL, entropy_thread_nmi, (void*)&objAPartition2);
-    pthread_join(entropies[0], (void**)&e1);
-    pthread_join(entropies[1], (void**)&e2);
+    for(i=0;i<2;i++) {
+       pthread_create(&entropies[i], NULL, entropy_thread_nmi, (void*)i);
+    }
+    for(i=0;i<2;i++) {
+        pthread_join(entropies[i], NULL);
+    }
     //Mutual
     pthread_create(mutual, NULL, mutual_thread_nmi, (void*)&partition);
     pthread_join(*mutual, NULL);
-    return mutual_summation_nmi/sqrt((*e1)*(*e2));
+    free(entropies);
+    free(mutual);
+    return mutual_summation_nmi/sqrt((en_nmi[0])*(en_nmi[1]));
 	//return  mutualInformation(objAPartition1, objAPartition2)/sqrt(entropy(objAPartition1)*entropy(objAPartition2));
 }
 
