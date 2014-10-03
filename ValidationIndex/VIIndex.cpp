@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 8
+#define qtdThreads 16
 double resposta[qtdThreads];
 Partition* partitions;
 double mutual_summation=0;
