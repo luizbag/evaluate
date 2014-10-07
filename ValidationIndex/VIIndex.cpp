@@ -6,7 +6,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 16
+#define qtdThreads 4
 double resposta[qtdThreads];
 Partition* partitions;
 double mutual_summation=0;
@@ -120,11 +120,12 @@ double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     for(i=0;i<2;i++) {
        pthread_create(&entropies[i], NULL, entropy_thread, (void*)i);
     }
+    //Mutual
+    pthread_create(mutual, NULL, mutual_thread, (void*)&partition);
+    
     for(i=0;i<2;i++) {
         pthread_join(entropies[i], NULL);
     }
-    //Mutual
-    pthread_create(mutual, NULL, mutual_thread, (void*)&partition);
     pthread_join(*mutual, NULL);
     free(entropies);
     free(mutual);

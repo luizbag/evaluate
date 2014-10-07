@@ -10,7 +10,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 16
+#define qtdThreads 4
 double resposta_nmi[qtdThreads];
 Partition* partitions_nmi;
 double mutual_summation_nmi=0;
@@ -114,11 +114,12 @@ double NMIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
     for(i=0;i<2;i++) {
        pthread_create(&entropies[i], NULL, entropy_thread_nmi, (void*)i);
     }
+    //Mutual
+    pthread_create(mutual, NULL, mutual_thread_nmi, (void*)&partition);
+    
     for(i=0;i<2;i++) {
         pthread_join(entropies[i], NULL);
     }
-    //Mutual
-    pthread_create(mutual, NULL, mutual_thread_nmi, (void*)&partition);
     pthread_join(*mutual, NULL);
     free(entropies);
     free(mutual);
