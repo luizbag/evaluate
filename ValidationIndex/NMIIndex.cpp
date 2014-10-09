@@ -10,7 +10,7 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#define qtdThreads 4
+#define qtdThreads 16
 double resposta_nmi[qtdThreads];
 Partition* partitions_nmi;
 double mutual_summation_nmi=0;
