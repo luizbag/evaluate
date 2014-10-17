@@ -120,6 +120,10 @@ class Partition {
 		/** @param Don't have */
 		itClustersOfPartition end();
 
+		/** Iterator that points to the end of the Clusters' vector */
+		/** @param Don't have */
+		itClustersOfPartition elementAt(int index);
+
 		/** Iterator that points to the object called iALabel of the Clusters' vector */
 		/** @param Cluster Label */
 		itClustersOfPartition findCluster(int iALabel);

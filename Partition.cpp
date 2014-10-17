@@ -196,6 +196,13 @@ Partition::itClustersOfPartition Partition::end() {
 	return vectorCluster.end();
 }
 
+Partition::itClustersOfPartition Partition::elementAt(int index) 
+{
+   Partition::itClustersOfPartition it = begin() + index;
+
+	return it;
+}
+
 Partition::itClustersOfPartition Partition::findCluster(int iALabel){
 	itClustersOfPartition it;
 
