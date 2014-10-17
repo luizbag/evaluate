@@ -2,6 +2,7 @@
 #include "../Partition.h"
 #include "../InformationTheory.h"
 #include "../Exception.h"
+#include "../time.h"
 
 /* Implementation of both inherited methods */
 
