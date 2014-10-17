@@ -8,12 +8,12 @@
 #include"InformationTheory.h"
 
 /* Implementation of methods in InformationTheory class */
-double InformationTheory::entropy(Partition &objPartition) {
+double InformationTheory::entropy(Partition &objPartition, int iNumT) {
 	double dSummation = 0;
 	double dStore;
 	int i =0;
 
-	#pragma omp parallel for num_threads(16)  reduction( + : dSummation)
+	#pragma omp parallel for num_threads(iNumT)  reduction( + : dSummation)
 		for ( i  = 0 ;  i  < objPartition.getNumClusters(); i++)
 		{
 			Partition::itClustersOfPartition it1 = objPartition.elementAt(i);
@@ -41,12 +41,12 @@ double InformationTheory::intersection(Partition &objPartition1, Partition &objP
 	return iCounter / static_cast<double> (objPartition1.getNumObjects());
 }
 
-double InformationTheory::mutualInformation(Partition &objPartition1, Partition &objPartition2) {
+double InformationTheory::mutualInformation(Partition &objPartition1, Partition &objPartition2, int iNumT) {
 	double dSummation = 0;
 	double dStore = 0, dProbabilityPartition1 = 0, dProbabilityPartition2 = 0;
 	int i;
 
-	#pragma omp parallel for num_threads(16) reduction( + : dSummation)
+	#pragma omp parallel for num_threads(iNumT) reduction( + : dSummation)
 	for ( i  = 0 ;  i  < objPartition1.getNumClusters(); i++)
 	{
 		Partition::itClustersOfPartition it1 = objPartition1.elementAt(i);

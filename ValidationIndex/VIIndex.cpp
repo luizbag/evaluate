@@ -6,9 +6,9 @@
 
 /* Implementation of both inherited methods */
 
-double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
+double VIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2, int iNumT)
 {
-	return entropy(objAPartition1) + entropy(objAPartition2) - 2*mutualInformation(objAPartition1, objAPartition2);
+	return entropy(objAPartition1,iNumT) + entropy(objAPartition2,iNumT) - 2*mutualInformation(objAPartition1, objAPartition2,iNumT);
 }
 
 double VIIndex::calculate(Partition *pAPartition, RelationSDN *pARelation, DataSet *pADataset){

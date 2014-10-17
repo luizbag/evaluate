@@ -7,9 +7,10 @@
 #include "time.h"
 #include <stdio.h>
 
-DataExplorer::DataExplorer(int iANumNn, DataSet *pADataSet, vector<Similarity *> vectorASimilarities, vector< ValidationIndex* > vectorAValidationIndexes) {
+DataExplorer::DataExplorer(int iANumNn, DataSet *pADataSet, vector<Similarity *> vectorASimilarities, vector< ValidationIndex* > vectorAValidationIndexes, int inumT) {
 
 	iNumNn = iANumNn;
+	iNumT = inumT;
 	pDataSet = pADataSet;
 	vectorSimilarities = vectorASimilarities;
 	vectorValidationIndexes = vectorAValidationIndexes;
@@ -147,7 +148,7 @@ void DataExplorer::evaluatePartition() {
 				vectorObjectivesValues.insert(vectorObjectivesValues.end(), value);
 			  } else {
 			    for (unsigned int i = 0; i < vectorRealClasses.size(); i++) {
-			      double value = vectorValidationIndexes[j]->calculate(*vectorRealClasses[i], *(it->first.first));
+			      double value = vectorValidationIndexes[j]->calculate(*vectorRealClasses[i], *(it->first.first), iNumT);
 			      vectorObjectivesValues.insert(vectorObjectivesValues.end(), value);
 			    }
 			  }

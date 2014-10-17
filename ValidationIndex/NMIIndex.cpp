@@ -8,9 +8,9 @@
 #include "NMIIndex.h"
 
 /* Implementation of both inherited methods */
-double NMIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2)
+double NMIIndex::calculate(Partition &objAPartition1, Partition &objAPartition2,int iNumT)
 {
-	return  mutualInformation(objAPartition1, objAPartition2)/sqrt(entropy(objAPartition1)*entropy(objAPartition2));
+	return  mutualInformation(objAPartition1, objAPartition2,iNumT)/sqrt(entropy(objAPartition1,iNumT)*entropy(objAPartition2,iNumT));
 }
 
 /* This method is to be used in internal validation measures, since NMI isn't an internal validation measure
