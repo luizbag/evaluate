@@ -141,7 +141,6 @@ void DataExplorer::evaluatePartition() {
 #else
 	GET_TIME(start);
 	for (itPartitionsOfPartitionsK2 it = vectorPartitionsK2.begin(); it != vectorPartitionsK2.end(); it++) {
-		#pragma parallel for num_threads(2)
 		for (unsigned int j = 0; j < vectorValidationIndexes.size(); j++) {
 			for (vector<RelationSDN *>::iterator itRelationSDN = vectorRelationSDN.begin(); itRelationSDN != vectorRelationSDN.end(); itRelationSDN++) {
 			  if (vectorValidationIndexes[j]->isInternal()){
