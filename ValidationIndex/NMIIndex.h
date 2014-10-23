@@ -19,7 +19,7 @@
 class NMIIndex : public InformationTheory, public ValidationIndex {
     public:
 			NMIIndex()  : ValidationIndex("NMI", external) {}
-            virtual double calculate(Partition &objAPartition1, Partition &objAPartition2);
+            virtual double calculate(Partition &objAPartition1, Partition &objAPartition2,int iNumT);
             virtual double calculate(Partition *pAPartition, RelationSDN *pARelation, DataSet *pADataset);
 
 };

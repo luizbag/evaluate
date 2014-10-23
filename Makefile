@@ -13,13 +13,7 @@ LIBS := -lboost_system -lboost_filesystem -fopenmp
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-./ValidationIndex/CRIndex.cpp \
-./ValidationIndex/Connectivity.cpp \
-./ValidationIndex/Deviation.cpp \
-./ValidationIndex/Variance.cpp \
-./ValidationIndex/FMeasure.cpp \
 ./ValidationIndex/NMIIndex.cpp \
-./ValidationIndex/Silhouette.cpp \
 ./ValidationIndex/VIIndex.cpp \
 ./Cluster.cpp \
 ./DataExplorer.cpp \
@@ -39,13 +33,7 @@ CPP_SRCS += \
 
 
 OBJS = \
-./ValidationIndex/CRIndex.o \
-./ValidationIndex/Connectivity.o \
-./ValidationIndex/Deviation.o \
-./ValidationIndex/Variance.o \
-./ValidationIndex/FMeasure.o \
 ./ValidationIndex/NMIIndex.o \
-./ValidationIndex/Silhouette.o \
 ./ValidationIndex/VIIndex.o \
 ./Cluster.o \
 ./DataExplorer.o \

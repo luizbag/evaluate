@@ -19,16 +19,10 @@
 #include "NnList.h"
 #include "RelationSDN.h"
 #include "ValidationIndex.h"
-#include "ValidationIndex/Connectivity.h"
-#include "ValidationIndex/Deviation.h"
-#include "ValidationIndex/Variance.h"
-#include "ValidationIndex/Silhouette.h"
 
 
-#include "ValidationIndex/CRIndex.h"
 #include "ValidationIndex/NMIIndex.h"
 #include "ValidationIndex/VIIndex.h"
-#include "ValidationIndex/FMeasure.h"
 
 // to run G-DID index, uncomment the line below
 //#define GDID
@@ -68,6 +62,7 @@ int main(int argc, char **argv) {
 
 	//NnNUM (number of nearest neighbors used by some algorithms and/or validation indices
 	int iNumNn = atoi(argv[3]);
+	int iNumNT = atoi(argv[6]);
 
 	//PARTITIONS
 	// partitions obtained with the algorithms with the DataExplorer or to be loaded
@@ -106,17 +101,17 @@ int main(int argc, char **argv) {
 	//vectorSimilarities.insert(vectorSimilarities.end(), pSimilarityPearson );
 
 	//INDEXES
-	Connectivity *pConnectivity = new Connectivity();
-	Deviation *pDeviation = new Deviation();
-	Variance *pVariance = new Variance();
-	Silhouette *pSilhouette = new Silhouette();
+	//Connectivity *pConnectivity = new Connectivity();
+	//Deviation *pDeviation = new Deviation();
+	//Variance *pVariance = new Variance();
+	//Silhouette *pSilhouette = new Silhouette();
 	//CKNNCluster *pCKNN = new CKNNCluster();
 #ifdef GDID
 	//GDid *pGDid = new GDid();
 #endif
 	VIIndex *pVIIndex = new VIIndex();
-	FMeasure *pFMeasure = new FMeasure();
-	CRIndex *pCRIndex = new CRIndex();
+	//FMeasure *pFMeasure = new FMeasure();
+	//CRIndex *pCRIndex = new CRIndex();
 	NMIIndex *pNMIIndex = new NMIIndex();
 
 	vector< ValidationIndex* > vectorValidationIndexes;
@@ -139,7 +134,7 @@ int main(int argc, char **argv) {
 
 
 	DataExplorer *pObjDataExplorer;
-	pObjDataExplorer = new DataExplorer(iNumNn, pObjDataSet, vectorSimilarities, vectorValidationIndexes);
+	pObjDataExplorer = new DataExplorer(iNumNn, pObjDataSet, vectorSimilarities, vectorValidationIndexes,iNumNT);
 
 	/**********************************************/
 

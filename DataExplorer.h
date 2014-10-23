@@ -38,6 +38,8 @@ class DataExplorer {
 
 		int iNumNn; ///< Number of neighbors
 
+		int iNumT; ///< Number of neighbors
+
 		vector < RelationSDN *> vectorRelationSDN; ///< vector of pointers to the RelationSDNs
 		DataSet *pDataSet; ///< pointer to the DataSet
 
@@ -50,7 +52,7 @@ class DataExplorer {
 
 		/** Class constructor */
 		/** @param  Number of neighbors, pointer to DataSet, vector of pointers to Similarities to be used, vector of validation indexes */
-		DataExplorer(int iANumNn, DataSet *pADataSet, vector<Similarity *> vectorASimilarities, vector< ValidationIndex* > vectorAValidationIndexes);
+		DataExplorer(int iANumNn, DataSet *pADataSet, vector<Similarity *> vectorASimilarities, vector< ValidationIndex* > vectorAValidationIndexes, int iNumT);
 
 
 		/** Loads Partitions from the disk to break them and added to Population */

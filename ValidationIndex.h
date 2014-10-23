@@ -40,7 +40,7 @@ public:
 	/** Method virtual from return value of measure validation external */
 	/** @param Two Partitions */
 	/** @return Returns value from measure validation*/
-	virtual double calculate(Partition &objPartition1, Partition &objPartition2) = 0;
+	virtual double calculate(Partition &objPartition1, Partition &objPartition2, int iNumT) = 0;
 
 
 	string getValidationIndexName();

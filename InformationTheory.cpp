@@ -8,16 +8,24 @@
 #include"InformationTheory.h"
 
 /* Implementation of methods in InformationTheory class */
-double InformationTheory::entropy(Partition &objPartition) {
+double InformationTheory::entropy(Partition &objPartition, int iNumT) {
 	double dSummation = 0;
 	double dStore;
+	int i =0;
 
-	for(Partition::itClustersOfPartition it1 = objPartition.begin(); it1 != objPartition.end(); it1++){
-		dStore = (*it1).getNumberOfObjects()	/ static_cast<double> (objPartition.getNumObjects());
-		if (dStore != 0) dStore *= log10(dStore); // assumindo log0 = 0
-		dSummation += dStore;
-	}
+	#pragma omp parallel for num_threads(iNumT)  reduction( + : dSummation)
+		for ( i  = 0 ;  i  < objPartition.getNumClusters(); i++)
+		{
+			Partition::itClustersOfPartition it1 = objPartition.elementAt(i);
 
+			dStore = (*it1).getNumberOfObjects()	/ static_cast<double> (objPartition.getNumObjects());
+			if (dStore != 0) 
+				dStore *= log10(dStore); // assumindo log0 = 0
+
+
+			dSummation += dStore;
+		}
+	
 	return -dSummation;
 }
 
@@ -33,11 +41,16 @@ double InformationTheory::intersection(Partition &objPartition1, Partition &objP
 	return iCounter / static_cast<double> (objPartition1.getNumObjects());
 }
 
-double InformationTheory::mutualInformation(Partition &objPartition1, Partition &objPartition2) {
+double InformationTheory::mutualInformation(Partition &objPartition1, Partition &objPartition2, int iNumT) {
 	double dSummation = 0;
 	double dStore = 0, dProbabilityPartition1 = 0, dProbabilityPartition2 = 0;
+	int i;
 
-	for(Partition::itClustersOfPartition it1 = objPartition1.begin(); it1 != objPartition1.end(); it1++){
+	#pragma omp parallel for num_threads(iNumT) reduction( + : dSummation)
+	for ( i  = 0 ;  i  < objPartition1.getNumClusters(); i++)
+	{
+		Partition::itClustersOfPartition it1 = objPartition1.elementAt(i);
+
 		for(Partition::itClustersOfPartition it2 = objPartition1.begin(); it2 != objPartition1.end(); it2++){
 			dStore = intersection(objPartition1, objPartition2, it1, it2);
 

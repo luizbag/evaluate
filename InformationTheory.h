@@ -18,8 +18,8 @@
 class InformationTheory {
 
     protected:
-              double entropy(Partition &objPartition);
-              double mutualInformation(Partition &objPartition1, Partition &objPartition2);
+              double entropy(Partition &objPartition, int iNumT);
+              double mutualInformation(Partition &objPartition1, Partition &objPartition2,int iNumT);
     private:
               double intersection(Partition &objPartition1, Partition &objPartition2, Partition::itClustersOfPartition itPartition1, Partition::itClustersOfPartition itPartition2);
 
